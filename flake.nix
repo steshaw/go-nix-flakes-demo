@@ -53,5 +53,10 @@
       # flake provides only one package or there is a clear "main"
       # package.
       defaultPackage = forAllSystems (system: self.packages.${system}.go-hello);
+
+      defaultApp = forAllSystems (system: {
+        type = "app";
+        program = "${self.packages.${system}.go-hello}/bin/go-hello";
+      });
     };
 }
