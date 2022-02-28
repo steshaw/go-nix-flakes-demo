@@ -58,5 +58,14 @@
         type = "app";
         program = "${self.packages.${system}.go-hello}/bin/go-hello";
       });
+
+      devShell = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in pkgs.mkShell {
+          # XXX: `go` is already present in the default devShell. How
+          # can we add additional packages here?
+          buildInputs = with pkgs; [ go gopls goimports go-tools ];
+        }
+      );
     };
 }
